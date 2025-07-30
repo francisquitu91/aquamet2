@@ -3,7 +3,6 @@
 import React from 'react';
 import { useData } from '@/contexts/DataContext';
 import { 
-  CloudIcon, 
   CloudArrowUpIcon, 
   ExclamationTriangleIcon,
   CheckCircleIcon 

@@ -67,11 +67,11 @@ const MOCK_COURSES: Course[] = [
 ];
 
 const MOCK_STUDENTS: Student[] = [
-  { id: '1', full_name: 'Ana García López', course_id: '1', status: 'Presente' },
-  { id: '2', full_name: 'Carlos Rodríguez Silva', course_id: '1', status: 'Presente' },
-  { id: '3', full_name: 'María Fernández Torres', course_id: '2', status: 'Presente' },
-  { id: '4', full_name: 'José Martínez Ruiz', course_id: '2', status: 'Retirado' },
-  { id: '5', full_name: 'Sofía González Pérez', course_id: '3', status: 'Presente' },
+  { id: '1', full_name: 'Ana García López', course_id: '1', status: 'Presente', rut_passport: '12345678-9' },
+  { id: '2', full_name: 'Carlos Rodríguez Silva', course_id: '1', status: 'Presente', rut_passport: '23456789-0' },
+  { id: '3', full_name: 'María Fernández Torres', course_id: '2', status: 'Presente', rut_passport: '34567890-1' },
+  { id: '4', full_name: 'José Martínez Ruiz', course_id: '2', status: 'Retirado', rut_passport: '45678901-2' },
+  { id: '5', full_name: 'Sofía González Pérez', course_id: '3', status: 'Presente', rut_passport: '56789012-3' },
 ];
 
 const MOCK_AUTHORIZED_PERSONS: AuthorizedPerson[] = [
@@ -95,7 +95,6 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     syncStatus: supabaseSyncStatus,
     lastSyncTime: lastSupabaseSyncTime,
     syncStudentsToSupabase,
-    fetchStudentsFromSupabase,
     upsertStudentToSupabase,
     deleteStudentFromSupabase
   } = useSupabaseStudents({ enableSync: true });
@@ -127,28 +126,32 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
 
     // Subscribe to courses changes
     unsubscribers.push(
-      syncManager.subscribe('courses', (newCourses: Course[]) => {
+      syncManager.subscribe('courses', (data: unknown) => {
+        const newCourses = data as Course[];
         setCourses(newCourses);
       })
     );
 
     // Subscribe to students changes
     unsubscribers.push(
-      syncManager.subscribe('students', (newStudents: Student[]) => {
+      syncManager.subscribe('students', (data: unknown) => {
+        const newStudents = data as Student[];
         setStudents(newStudents);
       })
     );
 
     // Subscribe to authorized persons changes
     unsubscribers.push(
-      syncManager.subscribe('authorizedPersons', (newPersons: AuthorizedPerson[]) => {
+      syncManager.subscribe('authorizedPersons', (data: unknown) => {
+        const newPersons = data as AuthorizedPerson[];
         setAuthorizedPersons(newPersons);
       })
     );
 
     // Subscribe to pickup logs changes
     unsubscribers.push(
-      syncManager.subscribe('pickupLogs', (newLogs: PickupLog[]) => {
+      syncManager.subscribe('pickupLogs', (data: unknown) => {
+        const newLogs = data as PickupLog[];
         setPickupLogs(newLogs);
       })
     );
@@ -181,6 +184,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     }, resetTime());
 
     return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Initial Supabase sync - sync current students to Supabase on first load
@@ -189,6 +193,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
       console.log('🔄 Iniciando sincronización inicial con Supabase...');
       syncStudentsToSupabase(students);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Solo ejecutar una vez al montar el componente
 
   // Computed values

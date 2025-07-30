@@ -10,9 +10,7 @@ import {
   ArrowRightOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
-  HomeIcon,
-  UsersIcon,
-  ClockIcon
+  HomeIcon
 } from '@heroicons/react/24/outline';
 
 interface ParentLayoutProps {

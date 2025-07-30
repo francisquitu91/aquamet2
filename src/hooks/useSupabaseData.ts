@@ -85,8 +85,9 @@ export const useSupabaseData = () => {
         schedules: schedulesData?.length
       });
 
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setError(errorMessage);
       logSupabaseOperation('FETCH_ALL_DATA_ERROR', null, error);
     } finally {
       setLoading(false);
@@ -112,7 +113,7 @@ export const useSupabaseData = () => {
       setCourses(prev => [...prev, data]);
       logSupabaseOperation('ADD_COURSE_SUCCESS', { courseId: data.id });
       return data; // Retornar el curso creado
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('ADD_COURSE_ERROR', null, error);
       throw error;
     }
@@ -133,7 +134,7 @@ export const useSupabaseData = () => {
         course.id === id ? { ...course, ...data } : course
       ));
       logSupabaseOperation('UPDATE_COURSE_SUCCESS', { courseId: id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('UPDATE_COURSE_ERROR', null, error);
       throw error;
     }
@@ -150,7 +151,7 @@ export const useSupabaseData = () => {
 
       setCourses(prev => prev.filter(course => course.id !== id));
       logSupabaseOperation('DELETE_COURSE_SUCCESS', { courseId: id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('DELETE_COURSE_ERROR', null, error);
       throw error;
     }
@@ -175,7 +176,7 @@ export const useSupabaseData = () => {
 
       setStudents(prev => [...prev, data]);
       logSupabaseOperation('ADD_STUDENT_SUCCESS', { studentId: data.id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('ADD_STUDENT_ERROR', null, error);
       throw error;
     }
@@ -202,7 +203,7 @@ export const useSupabaseData = () => {
         return updated;
       });
       logSupabaseOperation('UPDATE_STUDENT_SUCCESS', { studentId: id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('UPDATE_STUDENT_ERROR', null, error);
       throw error;
     }
@@ -219,7 +220,7 @@ export const useSupabaseData = () => {
 
       setStudents(prev => prev.filter(student => student.id !== id));
       logSupabaseOperation('DELETE_STUDENT_SUCCESS', { studentId: id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('DELETE_STUDENT_ERROR', null, error);
       throw error;
     }
@@ -243,7 +244,7 @@ export const useSupabaseData = () => {
 
       setAuthorizedPersons(prev => [...prev, data]);
       logSupabaseOperation('ADD_AUTHORIZED_PERSON_SUCCESS', { personId: data.id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('ADD_AUTHORIZED_PERSON_ERROR', null, error);
       throw error;
     }
@@ -264,7 +265,7 @@ export const useSupabaseData = () => {
         person.id === id ? { ...person, ...data } : person
       ));
       logSupabaseOperation('UPDATE_AUTHORIZED_PERSON_SUCCESS', { personId: id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('UPDATE_AUTHORIZED_PERSON_ERROR', null, error);
       throw error;
     }
@@ -281,7 +282,7 @@ export const useSupabaseData = () => {
 
       setAuthorizedPersons(prev => prev.filter(person => person.id !== id));
       logSupabaseOperation('DELETE_AUTHORIZED_PERSON_SUCCESS', { personId: id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('DELETE_AUTHORIZED_PERSON_ERROR', null, error);
       throw error;
     }
@@ -314,7 +315,7 @@ export const useSupabaseData = () => {
 
       setPickupLogs(prev => [newLog, ...prev]);
       logSupabaseOperation('REGISTER_PICKUP_SUCCESS', { studentId, authorizedPersonId });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('REGISTER_PICKUP_ERROR', null, error);
       throw error;
     }
@@ -333,7 +334,7 @@ export const useSupabaseData = () => {
 
       setSchedules(prev => [...prev, data]);
       logSupabaseOperation('ADD_SCHEDULE_SUCCESS', { scheduleId: data.id });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('ADD_SCHEDULE_ERROR', null, error);
       throw error;
     }
@@ -354,7 +355,7 @@ export const useSupabaseData = () => {
         schedule.id === scheduleId ? data : schedule
       ));
       logSupabaseOperation('UPDATE_SCHEDULE_SUCCESS', { scheduleId });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('UPDATE_SCHEDULE_ERROR', null, error);
       throw error;
     }
@@ -371,7 +372,7 @@ export const useSupabaseData = () => {
 
       setSchedules(prev => prev.filter(schedule => schedule.id !== scheduleId));
       logSupabaseOperation('DELETE_SCHEDULE_SUCCESS', { scheduleId });
-    } catch (error: any) {
+    } catch (error: unknown) {
       logSupabaseOperation('DELETE_SCHEDULE_ERROR', null, error);
       throw error;
     }
@@ -403,7 +404,7 @@ export const useSupabaseData = () => {
         return updated;
       });
       logSupabaseOperation('RESET_DAILY_STATUS_SUCCESS');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('❌ Error in resetDailyStatus:', error);
       logSupabaseOperation('RESET_DAILY_STATUS_ERROR', null, error);
       throw error;

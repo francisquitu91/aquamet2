@@ -23,10 +23,7 @@ export const UserManagement: React.FC = () => {
     createUser, 
     updateUser, 
     toggleUserStatus, 
-    deleteUser,
-    getActiveTeachers,
-    getActiveInspectors,
-    getActiveStaff
+    deleteUser
   } = useUsersData();
 
   const [searchQuery, setSearchQuery] = useState('');

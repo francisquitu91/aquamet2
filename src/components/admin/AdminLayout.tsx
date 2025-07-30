@@ -4,14 +4,12 @@ import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { Logo, Button, SyncIndicator, SupabaseSyncIndicator } from '../ui';
+import { Logo, SyncIndicator, SupabaseSyncIndicator } from '../ui';
 import { 
   UserGroupIcon, 
   ChartBarIcon, 
-  Cog6ToothIcon,
   CalendarDaysIcon,
   UsersIcon,
-  ArrowRightOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
   ArrowLeftIcon
@@ -33,7 +31,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   children, 
   activeSection = 'students' 
 }) => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

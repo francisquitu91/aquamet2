@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { supabase, logSupabaseOperation } from '@/lib/supabase';
 import { Student } from '@/types';
 
@@ -85,13 +85,22 @@ export const useSupabaseStudents = (options: UseSupabaseStudentsOptions = {}) =>
         throw error;
       }
 
-      const students: Student[] = data.map((item: any) => ({
-        id: item.id,
-        full_name: item.full_name,
-        course_id: item.course_id,
-        status: item.status,
-        rut_passport: item.rut_passport || ''
-      }));
+      const students: Student[] = data.map((item: unknown) => {
+        const studentItem = item as {
+          id: string;
+          full_name: string;
+          course_id: string;
+          status: 'Presente' | 'Retirado';
+          rut_passport?: string;
+        };
+        return {
+          id: studentItem.id,
+          full_name: studentItem.full_name,
+          course_id: studentItem.course_id,
+          status: studentItem.status,
+          rut_passport: studentItem.rut_passport || ''
+        };
+      });
 
       setSyncStatus('success');
       setLastSyncTime(new Date());
@@ -122,7 +131,7 @@ export const useSupabaseStudents = (options: UseSupabaseStudentsOptions = {}) =>
         updated_at: new Date().toISOString()
       };
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('students')
         .upsert(studentForSupabase)
         .select();

@@ -3,7 +3,7 @@ import React from 'react';
 // Real-time synchronization utilities
 export class SyncManager {
   private static instance: SyncManager;
-  private listeners: Map<string, ((data: any) => void)[]> = new Map();
+  private listeners: Map<string, ((data: unknown) => void)[]> = new Map();
   private pollInterval: NodeJS.Timeout | null = null;
   private lastSync: number = 0;
 
@@ -20,7 +20,7 @@ export class SyncManager {
   }
 
   // Subscribe to data changes
-  subscribe(key: string, callback: (data: any) => void) {
+  subscribe(key: string, callback: (data: unknown) => void) {
     if (!this.listeners.has(key)) {
       this.listeners.set(key, []);
     }
@@ -39,7 +39,7 @@ export class SyncManager {
   }
 
   // Broadcast data change
-  broadcast(key: string, data: any) {
+  broadcast(key: string, data: unknown) {
     // Skip if we're on the server (no localStorage)
     if (typeof window === 'undefined') return;
     
@@ -73,7 +73,7 @@ export class SyncManager {
     return null;
   }
 
-  private notifyListeners(key: string, data: any) {
+  private notifyListeners(key: string, data: unknown) {
     const callbacks = this.listeners.get(key);
     if (callbacks) {
       callbacks.forEach(callback => {
@@ -156,7 +156,8 @@ export const useSyncData = <T>(key: string, initialData: T) => {
   React.useEffect(() => {
     const syncManager = SyncManager.getInstance();
     
-    const unsubscribe = syncManager.subscribe(key, (newData: T) => {
+    const unsubscribe = syncManager.subscribe(key, (data: unknown) => {
+      const newData = data as T;
       setData(newData);
     });
 

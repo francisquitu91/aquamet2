@@ -5,7 +5,7 @@ import ParentLayout from '@/components/parent/ParentLayout';
 import { Card } from '@/components/ui/Card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSupabaseData } from '@/hooks/useSupabaseData';
-import { Student, AuthorizedPerson, StudentWithCourse } from '@/types';
+import { AuthorizedPerson, StudentWithCourse } from '@/types';
 import {
   UsersIcon,
   UserIcon,

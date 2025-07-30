@@ -1,16 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import ParentLayout from '@/components/parent/ParentLayout';
 import { Card } from '@/components/ui/Card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSupabaseData } from '@/hooks/useSupabaseData';
-import { Student, AuthorizedPerson, StudentWithCourse, PickupLog, Schedule } from '@/types';
+import { AuthorizedPerson, StudentWithCourse, PickupLog } from '@/types';
 import {
   UserIcon,
   UsersIcon,
   CheckCircleIcon,
-  ExclamationTriangleIcon,
   ClockIcon,
   AcademicCapIcon,
   BookOpenIcon,
@@ -37,7 +36,7 @@ const ParentDashboard = () => {
   };
 
   // Función para calcular la actividad actual del estudiante
-  const getCurrentActivity = () => {
+  const getCurrentActivity = useCallback(() => {
     if (!myStudent || !schedules.length) return null;
 
     const now = new Date();
@@ -77,7 +76,7 @@ const ParentDashboard = () => {
       startTime: '',
       endTime: ''
     };
-  };
+  }, [myStudent, schedules]);
 
   // Actualizar la hora actual cada minuto
   useEffect(() => {
@@ -92,7 +91,7 @@ const ParentDashboard = () => {
   useEffect(() => {
     const activity = getCurrentActivity();
     setCurrentActivity(activity);
-  }, [myStudent, schedules, currentTime]);
+  }, [myStudent, schedules, currentTime, getCurrentActivity]);
 
   // Funciones para formatear fechas
   const formatDate = (date: Date) => {

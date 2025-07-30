@@ -31,10 +31,10 @@ export const supabaseAdmin = supabaseServiceRoleKey
   : null;
 
 // Helper function to log operations for debugging
-export const logSupabaseOperation = (operation: string, data?: any, error?: any) => {
+export const logSupabaseOperation = (operation: string, data?: unknown, error?: unknown) => {
   const timestamp = new Date().toISOString();
   console.log(`[SUPABASE ${timestamp}] ${operation}`, {
     data: data ? JSON.stringify(data, null, 2) : undefined,
-    error: error ? error.message : undefined
+    error: error ? (error instanceof Error ? error.message : String(error)) : undefined
   });
 };

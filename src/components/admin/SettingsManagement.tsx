@@ -5,8 +5,7 @@ import {
   Cog6ToothIcon,
   BuildingOfficeIcon,
   BellIcon,
-  UserGroupIcon,
-  CalendarDaysIcon
+  UserGroupIcon
 } from '@heroicons/react/24/outline';
 
 export const SettingsManagement: React.FC = () => {

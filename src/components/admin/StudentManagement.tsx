@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '@/contexts/DataContext';
 import { Button, Input, Modal, Card } from '../ui';
-import { Student, Course, AuthorizedPerson } from '@/types';
+import { AuthorizedPerson, Student } from '@/types';
 import { 
   PlusIcon, 
   PencilIcon, 

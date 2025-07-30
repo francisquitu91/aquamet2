@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useData } from '@/contexts/DataContext';
 import { Card, Button } from '../ui';
-import { format, subDays, startOfDay, endOfDay } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { format, startOfDay, endOfDay } from 'date-fns';
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -24,7 +21,6 @@ import {
   ChartBarIcon,
   UsersIcon,
   ClockIcon,
-  InformationCircleIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
 
@@ -52,20 +48,20 @@ export const ReportsManagement: React.FC = () => {
   };
 
   // Generate daily pickup data for the last 7 days
-  const dailyPickupData = Array.from({ length: 7 }, (_, i) => {
-    const date = subDays(new Date(), 6 - i);
-    const dayLogs = pickupLogs.filter(log => {
-      const logDate = new Date(log.pickup_timestamp);
-      return logDate >= startOfDay(date) && logDate <= endOfDay(date);
-    });
+  // const dailyPickupData = Array.from({ length: 7 }, (_, i) => {
+  //   const date = subDays(new Date(), 6 - i);
+  //   const dayLogs = pickupLogs.filter(log => {
+  //     const logDate = new Date(log.pickup_timestamp);
+  //     return logDate >= startOfDay(date) && logDate <= endOfDay(date);
+  //   });
     
-    return {
-      date: format(date, 'dd/MM', { locale: es }),
-      fullDate: format(date, 'PPPP', { locale: es }),
-      pickups: dayLogs.length,
-      students: studentsWithCourses.length
-    };
-  });
+  //   return {
+  //     date: format(date, 'dd/MM', { locale: es }),
+  //     fullDate: format(date, 'PPPP', { locale: es }),
+  //     pickups: dayLogs.length,
+  //     students: studentsWithCourses.length
+  //   };
+  // });
 
   // Generate pickup data by authorized person type
   const relationshipPickupData = authorizedPersons.reduce((acc, person) => {
@@ -333,7 +329,7 @@ export const ReportsManagement: React.FC = () => {
                   verticalAlign="bottom" 
                   height={60}
                   wrapperStyle={{ paddingTop: '20px' }}
-                  content={(props) => {
+                  content={() => {
                     return (
                       <div className="flex flex-wrap justify-center gap-4 mt-4">
                         {relationshipPickupData.map((item, index) => (
@@ -378,7 +374,7 @@ export const ReportsManagement: React.FC = () => {
                   tickCount={6}
                 />
                 <Tooltip 
-                  formatter={(value, name) => [
+                  formatter={(value) => [
                     `${value} retiros`,
                     'Número de retiros'
                   ]}

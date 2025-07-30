@@ -9,7 +9,7 @@ export interface CreateUserData {
   email: string;
   password: string; // Contraseña en texto plano (se hashea en el servidor)
   name: string;
-  role: 'admin' | 'teacher' | 'inspector';
+  role: 'admin' | 'teacher' | 'inspector' | 'Parent';
   subject?: string;
   is_active?: boolean;
 }
@@ -19,7 +19,7 @@ export interface UpdateUserData {
   email?: string;
   password?: string; // Nueva contraseña (opcional)
   name?: string;
-  role?: 'admin' | 'teacher' | 'inspector';
+  role?: 'admin' | 'teacher' | 'inspector' | 'Parent';
   subject?: string;
   is_active?: boolean;
 }
@@ -106,7 +106,7 @@ export const useUsersData = () => {
 
       setUsers(prev => [data, ...prev]);
       return data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating user:', error);
       throw error;
     }
@@ -115,7 +115,7 @@ export const useUsersData = () => {
   // Función para actualizar un usuario
   const updateUser = async (id: string, userData: UpdateUserData): Promise<User> => {
     try {
-      const updateData: any = { ...userData };
+      const updateData: Record<string, unknown> = { ...userData };
       
       // Si se proporciona nueva contraseña, actualizar el hash
       if (userData.password) {
@@ -134,7 +134,7 @@ export const useUsersData = () => {
 
       setUsers(prev => prev.map(user => user.id === id ? data : user));
       return data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error updating user:', error);
       throw error;
     }
@@ -147,7 +147,7 @@ export const useUsersData = () => {
       if (!user) throw new Error('Usuario no encontrado');
 
       await updateUser(id, { is_active: !user.is_active });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error toggling user status:', error);
       throw error;
     }
@@ -175,7 +175,7 @@ export const useUsersData = () => {
       if (error) throw error;
 
       setUsers(prev => prev.filter(user => user.id !== id));
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting user:', error);
       throw error;
     }
