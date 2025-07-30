@@ -243,7 +243,38 @@ const ParentDashboard = () => {
         </Card>
 
         {/* Current Activity Card */}
-        {currentActivity && (
+        {myStudent.status === 'Retirado' ? (
+          <Card>
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-medium text-gray-900">
+                  Estado Actual
+                </h3>
+                <div className="text-sm text-gray-500">
+                  {currentTime.toLocaleTimeString('es-CL', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: false 
+                  })}
+                </div>
+              </div>
+
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <ClockIcon className="h-10 w-10 text-gray-600 bg-gray-100 rounded-full p-2" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-xl font-semibold text-gray-900">
+                    Retirado
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Su hijo/a ya fue retirado del colegio
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        ) : currentActivity && (
           <Card>
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
