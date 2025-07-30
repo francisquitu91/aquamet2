@@ -4,6 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  NEXT_PUBLIC_SUPABASE_URL = "https://dpqjjmrhqwwjlpgvqgve.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwcWpqbXJocXd3amxwZ3ZxZ3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMzNzY5NzgsImV4cCI6MjA2ODk1Mjk3OH0.177ogvUMAiFUbJ_Oyy6Bm0R-EoqVIRU5cTbzLKoj_mk"
+  SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwcWpqbXJocXd3amxwZ3ZxZ3ZlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzM3Njk3OCwiZXhwIjoyMDY4OTUyOTc4fQ.jX8TPBJqAY7aojrqwo6DUqN_y-ZOqcMb_yMMJ7kHv0g"
 
 [[redirects]]
   from = "/*"
