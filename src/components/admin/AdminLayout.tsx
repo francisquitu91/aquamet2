@@ -31,12 +31,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   children, 
   activeSection = 'students' 
 }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleBackToHome = () => {
-    router.push('/');
+    logout(); // Cerrar sesión
+    router.push('/'); // Redirigir al inicio
   };
 
   return (
